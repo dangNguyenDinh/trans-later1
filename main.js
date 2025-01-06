@@ -7,10 +7,46 @@ const call_api = require('./modules/call_api');
 const change_api = require('./modules/change_api');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const path = require('path');
+const os = require('os');
+const fs = require('fs');
+const appDir = path.join(os.homedir(), 'translater');
+const envFilePath = path.join(appDir, '.env');
+let isAlwaysOnTop = false;
+
+
 
 let genAI;
 let apikey;
-require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+const dotenv = require('dotenv');
+
+// Kiểm tra thư mục tồn tại, nếu không thì tạo mới
+const checkAndCreateDirectory = (dirPath) => {
+  if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+  }
+};
+
+// Đọc hoặc tạo file `.env`
+const readOrCreateEnvFile = () => {
+  checkAndCreateDirectory(path.dirname(envFilePath));
+
+  if (!fs.existsSync(envFilePath)) {
+      // Nếu file không tồn tại, tạo mới với nội dung mặc định
+      const defaultContent = `API_KEY=VALUE`;
+      fs.writeFileSync(envFilePath, defaultContent, { encoding: 'utf-8' });
+      console.log('.env file created at:', envFilePath);
+  } else {
+      console.log('.env file already exists. Reading content...');
+      const envContent = fs.readFileSync(envFilePath, { encoding: 'utf-8' });
+      console.log(envContent);
+  }
+};
+
+// Load biến môi trường sau khi đảm bảo file tồn tại
+readOrCreateEnvFile();
+dotenv.config({ path: envFilePath });
+
+
 let isOkInFirstTimeAPI = true; //đặt để ktra xem cái api khai báo chung có dùng đc ko, dùng đc thì ok
 
 
@@ -127,6 +163,17 @@ appexpress.post('/change_api', async (req, res) => {
     console.error("Error:", err);
     res.status(500).json({ message: "Internal server error" });
   }
+});
+
+//op top mode
+appexpress.post('/on_top', (req, res) => {
+  isAlwaysOnTop = !isAlwaysOnTop;
+
+  if (mainWindow) {
+      mainWindow.setAlwaysOnTop(isAlwaysOnTop);
+  }
+
+  res.json({ success: true, isAlwaysOnTop });
 });
 
 

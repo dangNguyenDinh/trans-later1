@@ -44,7 +44,7 @@ document.querySelector("#input-form button").addEventListener("click", async (ev
             document.querySelector("#specialized textarea").innerHTML = result.data.specialized;
             document.querySelector("#input-form button i").innerHTML = '&#xf0a9;';
             document.querySelector("#input-form button").disabled = false;
-        // Gọi API và nhận kết quả
+            // Gọi API và nhận kết quả
         } else {
             document.querySelector("#literal input").value = "Can't translate.";
             document.querySelector("#specialized textarea").innerHTML = result.data;
@@ -75,3 +75,29 @@ document.querySelector("#word-mode button").addEventListener("click", () => {
 document.querySelector("#change-api").addEventListener("click", () => {
     window.location.href = "../enterAPI.html";
 })
+
+//on top
+const alwaysOnTopBtn = document.querySelector('#on-top button');
+alwaysOnTopBtn.style.backgroundColor = "green";
+alwaysOnTopBtn.addEventListener('click', async () => {
+    try {
+        const response = await fetch('http://localhost:3000/on_top', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ toggle: true }) // Dữ liệu gửi lên server
+        });
+
+        const data = await response.json();
+        if(!data.isAlwaysOnTop){
+            alwaysOnTopBtn.style.backgroundColor = "green";
+            alwaysOnTopBtn.innerHTML = "On top";
+        }else{
+            alwaysOnTopBtn.style.backgroundColor = "red";
+            alwaysOnTopBtn.innerHTML = "Off top";
+        }
+    } catch (error) {
+        console.error('Error toggling Always on Top:', error);
+    }
+});

@@ -1,9 +1,15 @@
 const path = require('path');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 var dotenv = require('dotenv');
+const os = require('os');
 
 async function check_api() {
-    dotenv.config({ path: path.resolve(__dirname, '.env') }); // Tải lại file .env
+
+    const appDir = path.join(os.homedir(), 'translater');
+    const envFilePath = path.join(appDir, '.env');
+
+
+    dotenv.config({ path: envFilePath });
     //đọc api trong env
     var apikey = process.env.API_KEY;
     //nếu trống thì trả về not_existed

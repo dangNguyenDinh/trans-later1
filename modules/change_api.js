@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 var dotenv = require('dotenv');
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+const os = require('os');
 
 // Đường dẫn tới file .env
 
@@ -9,7 +9,8 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
 // Hàm thay đổi value của key
 function change_api(key, newValue) {
     // Đọc nội dung file .env
-    let envPath = path.resolve(__dirname, '../.env');
+    const appDir = path.join(os.homedir(), 'translater');
+    const envPath = path.join(appDir, '.env');
     let envData = fs.readFileSync(envPath, 'utf-8');
     const regex = new RegExp(`^(${key}=).*`, 'm'); // Tìm dòng chứa key cần thay đổi
 

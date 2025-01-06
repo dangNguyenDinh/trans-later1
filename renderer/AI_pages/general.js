@@ -66,3 +66,25 @@ document.querySelector("#word-mode button").addEventListener("click", () => {
 document.querySelector("#change-api").addEventListener("click", () => {
     window.location.href = "../enterAPI.html";
 })
+
+
+//on top
+const alwaysOnTopBtn = document.querySelector('#on-top button');
+
+alwaysOnTopBtn.addEventListener('click', async () => {
+    try {
+        const response = await fetch('http://localhost:3000/on_top', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ toggle: true }) // Dữ liệu gửi lên server
+        });
+
+        const data = await response.json();
+        console.log('Server response:', data);
+    } catch (error) {
+        console.error('Error toggling Always on Top:', error);
+    }
+});
+
