@@ -70,7 +70,7 @@ checkAPIStatus(); // Gọi hàm
 /*phần server*/
 //------------------------------------------------------------------------------
 const appexpress = express();
-const port = 3000;
+const port = 9999;
 appexpress.use(express.json());
 
 
@@ -177,7 +177,7 @@ appexpress.post('/on_top', (req, res) => {
 });
 
 
-// Bắt đầu server trên cổng 3000
+// Bắt đầu server trên cổng 9999
 appexpress.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

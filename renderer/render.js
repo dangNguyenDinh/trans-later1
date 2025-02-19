@@ -5,14 +5,14 @@ window.onload = async () => {
     notification.innerHTML = "Checking network connection...";
 
     // Kiểm tra kết nối
-    const connectionResponse = await fetch("http://localhost:3000/check_connection");
+    const connectionResponse = await fetch("http://localhost:9999/check_connection");
     const connectionData = await connectionResponse.json();
 
     if (connectionData.status === "valid") {
       notification.innerHTML = "Connection OK. Checking API KEY...";
 
       // Kiểm tra API Key
-      const apiResponse = await fetch("http://localhost:3000/check_api");
+      const apiResponse = await fetch("http://localhost:9999/check_api");
       const apiData = await apiResponse.json();
 
       if (apiData.status === "valid") {

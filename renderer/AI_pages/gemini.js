@@ -4,7 +4,7 @@ async function call_api(words) {
             throw new Error("Invalid input: 'words' must be a non-empty string");
         }
 
-        const response = await fetch("http://localhost:3000/call_api", {
+        const response = await fetch("http://localhost:9999/call_api", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -81,7 +81,7 @@ const alwaysOnTopBtn = document.querySelector('#on-top button');
 alwaysOnTopBtn.style.backgroundColor = "green";
 alwaysOnTopBtn.addEventListener('click', async () => {
     try {
-        const response = await fetch('http://localhost:3000/on_top', {
+        const response = await fetch('http://localhost:9999/on_top', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

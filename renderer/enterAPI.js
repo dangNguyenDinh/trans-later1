@@ -4,7 +4,7 @@ async function change_api(apitrim) {
             throw new Error("Invalid input: API must be a non-empty string");
         }
 
-        const response = await fetch("http://localhost:3000/change_api", {
+        const response = await fetch("http://localhost:9999/change_api", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
